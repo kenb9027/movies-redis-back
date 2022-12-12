@@ -1,7 +1,7 @@
 {
   "name": "movies-redis-back",
   "version": "1.0.0",
-  "description": "",
+  "description": "td m2i CDA noSQL",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
