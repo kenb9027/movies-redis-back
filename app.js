@@ -4,6 +4,8 @@ require("dotenv").config();
 
 
 // LOADING ROUTES
+const movieRouter = require("./routes/movie.router");
+const directorRouter = require("./routes/director.router");
 
 
 const app = express();
@@ -14,7 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 
 //ROUTER
-
+app.use("/movies", movieRouter);
+app.use("/directors", directorRouter);
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
