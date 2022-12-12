@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Actor.belongsTo(models.Movie);
+      Actor.belongsTo(models.Movie)
 
     }
   }
   Actor.init({
     name: DataTypes.STRING,
     age: DataTypes.INTEGER,
-    movie_id: DataTypes.INTEGER
+    MovieId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Actor',

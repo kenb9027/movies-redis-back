@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Producer.belongsTo(models.Movie);
-
+      Producer.belongsTo(models.Movie)
     }
   }
   Producer.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    MovieId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Producer',

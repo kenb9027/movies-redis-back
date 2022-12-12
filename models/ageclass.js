@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      AgeClass.belongsTo(models.Movie);
+      AgeClass.belongsTo(models.Movie)
 
     }
   }
   AgeClass.init({
-    age_minimum: DataTypes.INTEGER
+    age_minimum: DataTypes.INTEGER,
+    MovieId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'AgeClass',

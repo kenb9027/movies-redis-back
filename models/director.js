@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Director.init({
     name: DataTypes.STRING,
+    MovieId: DataTypes.INTEGER,
 
   }, {
     sequelize,
