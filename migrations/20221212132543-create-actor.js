@@ -15,6 +15,9 @@ module.exports = {
       age: {
         type: Sequelize.INTEGER
       },
+      movie_id: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
