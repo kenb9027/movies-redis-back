@@ -10,3 +10,15 @@ exports.findAllDirector = (req, res) => {
         .send(err);
     })
 }
+
+
+
+exports.createDirectorFromMovie = async (name , moivieId) => {
+    const newDirector = {
+        "name": name,
+        "MovieId": moivieId
+    };
+    
+    await Director.create(newDirector)
+
+}
