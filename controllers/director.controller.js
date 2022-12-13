@@ -12,6 +12,24 @@ exports.findAllDirector = (req, res) => {
 }
 
 
+
+exports.findOneDirector = (req, res) => {
+    const id = req.body.id;
+
+    if (id == null) {
+        res.status(400).send("ID can't be empty");
+    }
+
+    Director.findByPk(id)
+        .then((data) => {
+            res.status(200).send(data);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+};
+
+
 exports.createDirector = (req, res) => {
     Director.create(req.body)
     .then(data => {
@@ -33,7 +51,6 @@ exports.deleteDirector = (req, res) => {
           }
     })
     .then(data => {
-        console.log(req.body)
             req.status(200)
             .send(data);
     })
