@@ -104,35 +104,34 @@ exports.createMovie = (req, res) => {
         .then(async (data) => {
             
             //create Actors
-            await req.body.Actors.forEach(async (element) => {
+            await newMovie.Actors.forEach(async (element) => {
                 await ActorController.createActorFromMovie(element.name, element.age, data.id)
                 console.log(element)
             });
             //create Director
             await DirectorController.createDirectorFromMovie(
-                req.body.Director.name,
+                newMovie.Director.name,
                 data.id
             );
             //create Producer
             await ProducerController.createProducerFromMovie(
-                req.body.Producer.name,
+                newMovie.Producer.name,
                 data.id
             );
             //create Category
             await CategoryController.createCategoryFromMovie(
-                req.body.Category.name,
+                newMovie.Category.name,
                 data.id
             );
             //create AgeClass
             await AgeClassController.createAgeClassFromMovie(
-                req.body.AgeClass.age_minimum,
+                newMovie.AgeClass.age_minimum,
                 data.id
             );
 
             return data;
         })
         .then( (data) => {
-            console.log(data.id);
             Movie.findByPk(data.id, {
                 include: [Director, Producer, AgeClass, Category, Actor],
             })
