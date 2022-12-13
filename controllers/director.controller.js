@@ -11,6 +11,7 @@ exports.findAllDirector = (req, res) => {
     })
 }
 
+
 exports.createDirector = (req, res) => {
     Director.create(req.body)
     .then(data => {
@@ -59,4 +60,15 @@ exports.updateDirector = (req, res) => {
         res.status(500)
         .send(err);
     }) 
+
+}
+
+exports.createDirectorFromMovie = async (name , moivieId) => {
+    const newDirector = {
+        "name": name,
+        "MovieId": moivieId
+    };
+    
+    await Director.create(newDirector)
+
 }
