@@ -18,18 +18,6 @@ module.exports = {
       resume: {
         type: Sequelize.STRING
       },
-      director_id: {
-        type: Sequelize.INTEGER
-      },
-      producer_id: {
-        type: Sequelize.INTEGER
-      },
-      category_id: {
-        type: Sequelize.INTEGER
-      },
-      ageclass_id: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
