@@ -13,16 +13,12 @@ exports.findAllDirector = (req, res) => {
 
 
 
-exports.createDirectorFromMovie = (res , name , moivieId) => {
+exports.createDirectorFromMovie = async (name , moivieId) => {
     const newDirector = {
         "name": name,
         "MovieId": moivieId
     };
     
     Director.create(newDirector)
-        .then((data) => {
-            // res.status(201).send(data);
-        }).catch((err) => {
-            // res.status(500).send(err)
-        });
+
 }

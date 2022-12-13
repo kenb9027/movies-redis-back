@@ -39,16 +39,12 @@ exports.createProducer = (req, res) => {
 
 }
 
-exports.createProducerFromMovie = (res , name , moivieId) => {
+exports.createProducerFromMovie = async (name , moivieId) => {
     const newProducer = {
         "name": name,
         "MovieId": moivieId
     };
     
     Producer.create(newProducer)
-        .then((data) => {
-            // res.status(201).send(data);
-        }).catch((err) => {
-            // res.status(500).send(err)
-        });
+
 }

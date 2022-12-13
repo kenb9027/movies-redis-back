@@ -36,5 +36,15 @@ exports.createActor = (req, res) => {
             res.status(500).send(err)
         });
 
-
+    
+        
+    }
+exports.createActorFromMovie = async (name, age, moivieId) => {
+    const newActor = {
+        "name": name,
+        "age": age,
+        "MovieId": moivieId
+    };
+        
+    Actor.create(newActor)
 }

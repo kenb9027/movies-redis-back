@@ -37,16 +37,12 @@ exports.createCategory = (req, res) => {
         });
 }
 
-exports.createCategoryFromMovie = (res , name , moivieId) => {
+exports.createCategoryFromMovie = async (name , moivieId) => {
     const newCategory = {
         "name": name,
         "MovieId": moivieId
     };
     
     Category.create(newCategory)
-        .then((data) => {
-            // res.status(201).send(data);
-        }).catch((err) => {
-            // res.status(500).send(err)
-        });
+
 }

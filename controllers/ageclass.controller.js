@@ -39,16 +39,12 @@ exports.createAgeClass = (req, res) => {
 
 }
 
-exports.createAgeClassFromMovie = (res , age_minimum , moivieId) => {
+exports.createAgeClassFromMovie = async (age_minimum , moivieId) => {
     const newAgeClass = {
         "age_minimum": age_minimum,
         "MovieId": moivieId
     };
     
     AgeClass.create(newAgeClass)
-        .then((data) => {
-            // res.status(201).send(data);
-        }).catch((err) => {
-            // res.status(500).send(err)
-        });
+        
 }

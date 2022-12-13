@@ -30,7 +30,7 @@ exports.findOneMovie = (req, res) => {
         res.status(400).send("ID can't be empty");
     }
 
-    Movie.findByPk(id , {
+    Movie.findByPk(id, {
         include: [Director, Producer, AgeClass, Category, Actor],
     })
         .then((data) => {
@@ -42,7 +42,6 @@ exports.findOneMovie = (req, res) => {
 };
 
 exports.createMovie = (req, res) => {
-
     //* req.body
     // {
     //     "title" : "La marche des pingouins",
@@ -50,18 +49,28 @@ exports.createMovie = (req, res) => {
     //     "resume": "Lorem ipsum tralala",
     //     "Director": {
     //         "name" : "Jean Vasseur"
-    //     },  
+    //     },
     //     "Producer": {
     //         "name" : "Daniel Lemarchand"
-    //     },    
+    //     },
     //     "Category": {
     //         "name" : "Comédie"
     //     },
     //     "AgeClass": {
     //         "age_minimum": 6
-    //     }
+    //     },
+    //     "Actors": [
+    //          {
+    //              "name": "Rebecca Stone",
+    //              "age": 31
+    //          },
+    //          {
+    //              "name": "John Doe",
+    //              "age": 20
+    //          },
+    //      ]
     // }
-    
+
     if (
         req.body.title == null ||
         req.body.duration == null ||
@@ -70,25 +79,48 @@ exports.createMovie = (req, res) => {
         req.body.Producer == null ||
         req.body.Category == null ||
         req.body.AgeClass == null ||
+        req.body.Actors == null ||
         req.body.Director.name == null ||
         req.body.Producer.name == null ||
         req.body.Category.name == null ||
         req.body.AgeClass.age_minimum == null
-    ) { 
-        res.status(400).send("All Movie parameters must be send.")
+    ) {
+        res.status(400).send("All Movie parameters must be send.");
     }
 
+    req.body.Actors.forEach((element) => {
+        if (element.name == null || element.age == null) {
+            res.status(400).send("All Actor parameters must be send.");
+        }
+    });
+
     const newMovie = req.body;
-    
+
     Movie.create(newMovie)
         .then((data) => {
 
-            DirectorController.createDirectorFromMovie(res , req.body.Director.name, data.id);
-            ProducerController.createProducerFromMovie(res , req.body.Producer.name, data.id);
-            CategoryController.createCategoryFromMovie(res , req.body.Category.name, data.id);
-            AgeClassController.createAgeClassFromMovie(res , req.body.AgeClass.age_minimum, data.id);
+            DirectorController.createDirectorFromMovie(
+                req.body.Director.name,
+                data.id
+            );
+            ProducerController.createProducerFromMovie(
+                req.body.Producer.name,
+                data.id
+            );
+            CategoryController.createCategoryFromMovie(
+                req.body.Category.name,
+                data.id
+            );
+            AgeClassController.createAgeClassFromMovie(
+                req.body.AgeClass.age_minimum,
+                data.id
+            );
 
-            movieCreated = Movie.findByPk(data.id , {
+            req.body.Actors.forEach((element) => {
+                ActorController.createActorFromMovie(element.name , element.age , data.id)
+            });
+
+            Movie.findByPk(data.id, {
                 include: [Director, Producer, AgeClass, Category, Actor],
             })
                 .then((result) => {
@@ -97,11 +129,9 @@ exports.createMovie = (req, res) => {
                 .catch((error) => {
                     res.status(500).send(error);
                 });
-
         })
         .catch((err) => {
-            res.status(500).send(err)
+            console.log(err);
+            res.status(500).send(err);
         });
-
-
-}
+};
