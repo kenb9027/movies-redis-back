@@ -16,7 +16,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   Director.init({
     name: DataTypes.STRING,
-    MovieId: DataTypes.INTEGER,
+    MovieId:  {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {         // Director belongsTo Movie 1:1
+        model: 'Movies',
+        key: 'id'
+      }
+    },
 
   }, {
     sequelize,

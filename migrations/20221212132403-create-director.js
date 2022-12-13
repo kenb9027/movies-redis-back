@@ -13,7 +13,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       MovieId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {         // Director belongsTo Movie 1:1
+          model: 'Movies',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

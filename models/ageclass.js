@@ -17,7 +17,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   AgeClass.init({
     age_minimum: DataTypes.INTEGER,
-    MovieId: DataTypes.INTEGER,
+    MovieId:  {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {         // Director belongsTo Movie 1:1
+        model: 'Movies',
+        key: 'id'
+      }
+    },
   }, {
     sequelize,
     modelName: 'AgeClass',
