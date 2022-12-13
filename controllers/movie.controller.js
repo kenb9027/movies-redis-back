@@ -61,6 +61,22 @@ exports.createMovie = (req, res) => {
     //         "age_minimum": 6
     //     }
     // }
+    
+    if (
+        req.body.title == null ||
+        req.body.duration == null ||
+        req.body.resume == null ||
+        req.body.Director == null ||
+        req.body.Producer == null ||
+        req.body.Category == null ||
+        req.body.AgeClass == null ||
+        req.body.Director.name == null ||
+        req.body.Producer.name == null ||
+        req.body.Category.name == null ||
+        req.body.AgeClass.age_minimum == null
+    ) { 
+        res.status(400).send("All Movie parameters must be send.")
+    }
 
     const newMovie = req.body;
     
