@@ -47,18 +47,17 @@ exports.updateDirector = (req, res) => {
     const updateDirector = {
         name: req.body.name
     }
-    Director.update( updateDirector , {where: {
-        id: req.body.id
-      }}) 
+    Director.update(
+        updateDirector,
+        { where: { id: req.body.id } }
+    ) 
     .then(data => {
         console.log(data)
-            req.status(200)
-            .send(data);
+        res.status(200).send(data);
     })
     .catch(err => {
-        console.log("test1")
-        res.status(500)
-        .send(err);
+        console.log(err)
+        res.status(500).send(err);
     }) 
 
 }
