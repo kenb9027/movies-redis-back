@@ -12,12 +12,17 @@ module.exports = {
       age_minimum: {
         type: Sequelize.INTEGER
       },
+      MovieId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {         // AgeClass belongsTo Movie 1:1
+          model: 'Movies',
+          key: 'id'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      MovieId: {
-        type: Sequelize.INTEGER
       },
       updatedAt: {
         allowNull: false,

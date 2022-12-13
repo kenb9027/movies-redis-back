@@ -16,7 +16,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       MovieId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {         // Actor belongsTo Movie 1:1
+          model: 'Movies',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
