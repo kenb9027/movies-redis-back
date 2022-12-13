@@ -42,34 +42,38 @@ exports.findOneMovie = (req, res) => {
 };
 
 exports.createMovie = (req, res) => {
+    /** 
     //* req.body
-    // {
-    //     "title" : "La marche des pingouins",
-    //     "duration" : 144,
-    //     "resume": "Lorem ipsum tralala",
-    //     "Director": {
-    //         "name" : "Jean Vasseur"
-    //     },
-    //     "Producer": {
-    //         "name" : "Daniel Lemarchand"
-    //     },
-    //     "Category": {
-    //         "name" : "Comédie"
-    //     },
-    //     "AgeClass": {
-    //         "age_minimum": 6
-    //     },
-    //     "Actors": [
-    //          {
-    //              "name": "Rebecca Stone",
-    //              "age": 31
-    //          },
-    //          {
-    //              "name": "John Doe",
-    //              "age": 20
-    //          },
-    //      ]
-    // }
+
+    {
+        "title" : "Rois du Japon",
+        "duration" : 84,
+        "resume": "Lorem ipsum tralala",
+        "Director": {
+            "name" : "Yoki Yakashama"
+        },  
+        "Producer": {
+            "name" : "Kim Hoji"
+        },    
+        "Category": {
+            "name" : "Enfant"
+        },
+        "AgeClass": {
+            "age_minimum": 3
+        },
+        "Actors": [
+            {
+                "name": "Shu Oki",
+                "age": 31
+            },
+            {
+                "name": "Abe Kijujima",
+                "age": 29
+            }
+        ]
+    }
+
+    */
 
     if (
         req.body.title == null ||
@@ -85,51 +89,61 @@ exports.createMovie = (req, res) => {
         req.body.Category.name == null ||
         req.body.AgeClass.age_minimum == null
     ) {
-        res.status(400).send("All Movie parameters must be send.");
+        res.status(400).send("All Movie's parameters must be send.");
     }
 
     req.body.Actors.forEach((element) => {
         if (element.name == null || element.age == null) {
-            res.status(400).send("All Actor parameters must be send.");
+            res.status(400).send("All Actor's parameters must be send.");
         }
     });
 
     const newMovie = req.body;
 
     Movie.create(newMovie)
-        .then((data) => {
-
-            DirectorController.createDirectorFromMovie(
+        .then(async (data) => {
+            
+            //create Actors
+            await req.body.Actors.forEach(async (element) => {
+                await ActorController.createActorFromMovie(element.name, element.age, data.id)
+                console.log(element)
+            });
+            //create Director
+            await DirectorController.createDirectorFromMovie(
                 req.body.Director.name,
                 data.id
             );
-            ProducerController.createProducerFromMovie(
+            //create Producer
+            await ProducerController.createProducerFromMovie(
                 req.body.Producer.name,
                 data.id
             );
-            CategoryController.createCategoryFromMovie(
+            //create Category
+            await CategoryController.createCategoryFromMovie(
                 req.body.Category.name,
                 data.id
             );
-            AgeClassController.createAgeClassFromMovie(
+            //create AgeClass
+            await AgeClassController.createAgeClassFromMovie(
                 req.body.AgeClass.age_minimum,
                 data.id
             );
 
-            req.body.Actors.forEach((element) => {
-                ActorController.createActorFromMovie(element.name , element.age , data.id)
-            });
-
+            return data;
+        })
+        .then( (data) => {
+            console.log(data.id);
             Movie.findByPk(data.id, {
                 include: [Director, Producer, AgeClass, Category, Actor],
             })
-                .then((result) => {
+            .then((result) => {
                     res.status(201).send(result);
                 })
                 .catch((error) => {
                     res.status(500).send(error);
-                });
-        })
+                })
+        }
+        )
         .catch((err) => {
             console.log(err);
             res.status(500).send(err);

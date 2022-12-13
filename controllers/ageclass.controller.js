@@ -45,6 +45,6 @@ exports.createAgeClassFromMovie = async (age_minimum , moivieId) => {
         "MovieId": moivieId
     };
     
-    AgeClass.create(newAgeClass)
+    await AgeClass.create(newAgeClass)
         
 }

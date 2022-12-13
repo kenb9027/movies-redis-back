@@ -19,6 +19,6 @@ exports.createDirectorFromMovie = async (name , moivieId) => {
         "MovieId": moivieId
     };
     
-    Director.create(newDirector)
+    await Director.create(newDirector)
 
 }

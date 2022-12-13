@@ -43,6 +43,6 @@ exports.createCategoryFromMovie = async (name , moivieId) => {
         "MovieId": moivieId
     };
     
-    Category.create(newCategory)
+    await Category.create(newCategory)
 
 }

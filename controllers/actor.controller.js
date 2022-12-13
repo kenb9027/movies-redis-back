@@ -44,7 +44,6 @@ exports.createActorFromMovie = async (name, age, moivieId) => {
         "name": name,
         "age": age,
         "MovieId": moivieId
-    };
-        
-    Actor.create(newActor)
+    }; 
+    await Actor.create(newActor)
 }

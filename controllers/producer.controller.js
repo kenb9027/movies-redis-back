@@ -45,6 +45,6 @@ exports.createProducerFromMovie = async (name , moivieId) => {
         "MovieId": moivieId
     };
     
-    Producer.create(newProducer)
+    await Producer.create(newProducer)
 
 }
