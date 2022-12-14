@@ -7,6 +7,7 @@ const router = express.Router();
 
 
 router.get("/", movieController.findAllMovies);
+router.get("/redis", movieController.findAllMoviesFromRedis);
 router.get("/:id", movieController.findOneMovie);
 router.post("/", movieController.createMovie);
 

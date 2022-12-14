@@ -63,3 +63,39 @@ exports.setData = async (key, datas) => {
         this.redisDisconnect();
     }
 };
+
+/**
+ * SET DATA IN REDIS WITH EXPIRATION TIME
+ * @param {string} key
+ * @param {string} datas
+ * @param {int} expiration // time before key expire in seconds
+ * @returns
+ */
+exports.setDataWithExpiration = async (key, datas, expiration) => {
+    this.redisConnection();
+    try {
+        // redisClient.set(key, datas, function (err, reply) {
+        //     // console.log(reply); // OK
+        // });
+        redisClient.set(key , datas , {
+            EX: expiration,
+            NX: true
+          });
+
+
+        let data = await redisClient.get(key);
+        this.redisDisconnect();
+        return data;
+    } catch (error) {
+        console.log(error);
+        this.redisDisconnect();
+    }
+};
+
+/**
+ * 
+  await client.set('key', 'value', {
+  EX: 10,
+  NX: true
+});
+ */

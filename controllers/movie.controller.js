@@ -11,6 +11,34 @@ const AgeClassController = require("../controllers/ageclass.controller");
 const CategoryController = require("../controllers/category.controller");
 const ActorController = require("../controllers/actor.controller");
 
+const redisUtils = require("../utils/redis.utils");
+
+exports.findAllMoviesFromRedis = async (req, res) => {
+    
+    let redisMovies = await redisUtils.getData("movies");
+
+
+    if (redisMovies == null) {
+        Movie.findAll({
+            include: [Director, Producer, AgeClass, Category, Actor],
+        })
+            .then(async (data) => {
+                await redisUtils.setDataWithExpiration("movies", JSON.stringify(data), 10);
+                console.log("data get from DB, and stored in redis")
+                res.status(200).send(data);
+            })
+            .catch((error) => {
+                res.status(500).send(error);
+            });
+    }
+    else {
+        console.log("data get from redis")
+        res.status(200).send(JSON.parse(redisMovies));
+    }
+
+}
+
+
 exports.findAllMovies = (req, res) => {
     Movie.findAll({
         include: [Director, Producer, AgeClass, Category, Actor],
