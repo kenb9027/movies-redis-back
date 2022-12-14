@@ -74,14 +74,12 @@ exports.setData = async (key, datas) => {
 exports.setDataWithExpiration = async (key, datas, expiration) => {
     this.redisConnection();
     try {
-        // redisClient.set(key, datas, function (err, reply) {
-        //     // console.log(reply); // OK
-        // });
         redisClient.set(key , datas , {
             EX: expiration,
             NX: true
           });
-
+          // EX : expiration time in seconds
+          // NX : only set the key if already exist. 
 
         let data = await redisClient.get(key);
         this.redisDisconnect();
@@ -92,10 +90,3 @@ exports.setDataWithExpiration = async (key, datas, expiration) => {
     }
 };
 
-/**
- * 
-  await client.set('key', 'value', {
-  EX: 10,
-  NX: true
-});
- */
