@@ -23,11 +23,11 @@ app.use(express.urlencoded({ extended: true }));
 
 //ROUTER
 app.use("/movies", movieRouter);
-app.use("/directors", directorRouter);
-app.use("/producers", producerRouter);
-app.use("/categories", categoryRouter);
-app.use("/ageclass", ageclassRouter);
-app.use("/actors", actorRouter);
+// app.use("/directors", directorRouter);
+// app.use("/producers", producerRouter);
+// app.use("/categories", categoryRouter);
+// app.use("/ageclass", ageclassRouter);
+// app.use("/actors", actorRouter);
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

@@ -6,8 +6,8 @@ require('dotenv').config();
 const router = express.Router();
 
 router.post("/create", categoryController.createCategory);
-router.delete("/delete", categoryController.deleteCategory);
-router.put("/update", categoryController.updateCategory);
+// router.delete("/delete", categoryController.deleteCategory);
+// router.put("/update", categoryController.updateCategory);
 router.get("/", categoryController.findAllCategorys);
 
 // export default router;
